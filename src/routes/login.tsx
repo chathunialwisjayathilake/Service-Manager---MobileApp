@@ -21,13 +21,13 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (mode: "normal" | "mobile", e?: React.FormEvent) => {
+  const handleLogin = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!email.trim() || !password.trim()) {
       setError("Enter your email and password to continue.");
       return;
     }
-    sessionStorage.setItem("servio_login_mode", mode);
+    sessionStorage.setItem("servio_login_mode", "normal");
     navigate({ to: "/" });
   };
 
@@ -79,7 +79,7 @@ function LoginPage() {
             Sign in to your service desk account.
           </p>
 
-          <form onSubmit={(e) => handleLogin("normal", e)} className="mt-8 space-y-4">
+          <form onSubmit={(e) => handleLogin(e)} className="mt-8 space-y-4">
             <div>
               <label className="mb-1 block text-xs font-semibold">Work email</label>
               <div className="relative">
@@ -149,7 +149,7 @@ function LoginPage() {
               </button>
               <button
                 type="button"
-                onClick={() => handleLogin("mobile")}
+                onClick={() => navigate({ to: "/mobile-apk-download" })}
                 className="flex w-full items-center justify-center gap-2 rounded-lg border border-input bg-card py-2.5 text-sm font-semibold text-foreground hover:bg-muted transition-colors"
               >
                 <Smartphone size={15} /> Mobile Login

@@ -78,7 +78,6 @@ const modules = [
     tone: "bg-warning-soft text-warning",
   },
   { to: "/incentive", label: "Incentive", icon: Trophy, tone: "bg-success-soft text-success" },
-  { to: "/mobile", label: "Mobile App", icon: Smartphone, tone: "bg-primary-soft text-primary" },
 ] as const;
 
 function Workspace() {

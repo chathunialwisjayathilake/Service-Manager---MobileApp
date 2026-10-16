@@ -1,11 +1,12 @@
 import { useState, useEffect, type ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
-import { Headset, ArrowLeft, Bell, ScanLine } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Headset, ArrowLeft, Bell, ScanLine, LogOut } from "lucide-react";
 import { SyncStatusBadge } from "./SyncStatusBadge";
 import { MobileNav } from "./MobileNav";
 import { getMobileNotifications, subscribeMobileJobs } from "@/lib/mobile-data";
 
 export function MobileShell({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
@@ -16,6 +17,12 @@ export function MobileShell({ children }: { children: ReactNode }) {
     updateUnread();
     return subscribeMobileJobs(updateUnread);
   }, []);
+
+  const handleMobileLogout = () => {
+    sessionStorage.removeItem("mobile_authenticated");
+    sessionStorage.removeItem("mobile_tech_id");
+    navigate({ to: "/mobile/login" });
+  };
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -58,6 +65,16 @@ export function MobileShell({ children }: { children: ReactNode }) {
                 </span>
               )}
             </Link>
+
+            {/* Demo Logout Button */}
+            <button
+              type="button"
+              onClick={handleMobileLogout}
+              className="p-1.5 rounded-lg border bg-destructive-soft text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors"
+              title="Sign Out of Mobile App (O1-SCR-MOB-01)"
+            >
+              <LogOut size={15} />
+            </button>
 
             <Link
               to="/"
